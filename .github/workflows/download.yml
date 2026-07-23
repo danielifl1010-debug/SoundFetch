@@ -30,9 +30,15 @@ jobs:
           SONG_NAME: ${{ github.event.inputs.song_name }}
         run: python3 download.py
 
-      - name: Upload downloaded MP3
+      - name: Upload any file created in workspace
         uses: actions/upload-artifact@v4
         with:
           name: downloaded-song
-          path: '**/*.mp3'
+          path: |
+            *.mp3
+            *.m4a
+            *.webm
+            *.opus
+            *.mkv
+            *.mp4
           if-no-files-found: ignore

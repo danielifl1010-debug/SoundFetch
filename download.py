@@ -19,7 +19,9 @@ def download_song():
     
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([song_name])
+            info = ydl.extract_info(song_name, download=True)
+            filename = ydl.prepare_filename(info)
+            print(f"שם הקובץ המקורי: {filename}")
         print("ההורדה הסתיימה בהצלחה!")
     except Exception as e:
         print(f"שגיאה בהורדה: {e}")

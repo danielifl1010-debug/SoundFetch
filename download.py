@@ -1,9 +1,14 @@
 import yt_dlp
 import os
+import shutil
+import glob
 
 def download_song():
     song_name = os.environ.get("SONG_NAME", "יונתן שינפלד דרך חדשה")
     print(f"מוריד את השיר: '{song_name}', אנא המתן...")
+    
+    # יצירת תיקיית יעד ברורה
+    os.makedirs("downloads", exist_ok=True)
     
     ydl_opts = {
         'format': 'bestaudio/best',
@@ -13,15 +18,18 @@ def download_song():
             'preferredcodec': 'mp3',
             'preferredquality': '192',
         }],
-        'outtmpl': 'song.%(ext)s',
+        'outtmpl': 'downloads/song.%(ext)s',
         'extractor_args': {'youtube': {'player_client': ['android', 'web']}}
     }
     
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            info = ydl.extract_info(song_name, download=True)
-            filename = ydl.prepare_filename(info)
-            print(f"שם הקובץ המקורי: {filename}")
+            ydl.download([song_name])
+            
+        # לוודא שקובץ ה-mp3 קיים בתיקייה ולהדפיס את תוכנה
+        files = glob.glob('downloads/*')
+        print(f"קבצים שנמצאו בתיקיית ההורדות: {files}")
+        
         print("ההורדה הסתיימה בהצלחה!")
     except Exception as e:
         print(f"שגיאה בהורדה: {e}")

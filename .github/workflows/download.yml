@@ -1,0 +1,24 @@
+name: SoundFetch Cloud Runner
+
+on: 
+  workflow_dispatch: # מאפשר לך ללחוץ על כפתור "הפעל" ידנית מתי שתרצה באתר של גיטהאב
+
+jobs:
+  run-download:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install yt-dlp
+
+      - name: Run script
+        run: python3 download.py

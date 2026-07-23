@@ -1,7 +1,8 @@
 import yt_dlp
+import os
 
 def download_song():
-    song_name = input("הכנס את שם השיר שתרצה להוריד: ")
+    song_name = os.environ.get("SONG_NAME", "יונתן שינפלד דרך חדשה")
     print(f"מוריד את השיר: '{song_name}', אנא המתן...")
     
     ydl_opts = {

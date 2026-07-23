@@ -1,7 +1,12 @@
 name: SoundFetch Cloud Runner
 
 on: 
-  workflow_dispatch: # מאפשר לך ללחוץ על כפתור "הפעל" ידנית מתי שתרצה באתר של גיטהאב
+  workflow_dispatch:
+    inputs:
+      song_name:
+        description: 'הכנס את שם השיר להורדה'
+        required: true
+        default: 'יונתן שינפלד דרך חדשה'
 
 jobs:
   run-download:
@@ -21,4 +26,6 @@ jobs:
           pip install yt-dlp
 
       - name: Run script
+        env:
+          SONG_NAME: ${{ github.event.inputs.song_name }}
         run: python3 download.py

@@ -30,12 +30,8 @@ jobs:
           SONG_NAME: ${{ github.event.inputs.song_name }}
         run: python3 download.py
 
-      - name: Upload any audio file found
+      - name: Upload downloaded MP3
         uses: actions/upload-artifact@v4
         with:
           name: downloaded-song
-          path: |
-            *.mp3
-            *.m4a
-            *.webm
-            *.opus
+          path: output_song.mp3
